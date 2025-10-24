@@ -1,9 +1,9 @@
 {
-  "name": "no-vue3-cron",
-  "version": "2.0.0",
+  "name": "@ci/no-vue3-cron",
+  "version": "1.0.0",
   "private": false,
   "description": "Corn expression plugin based on vue3+elementplus（基于vue3+elementplus的corn表达式插件）",
-  "author": "nonone",
+  "author": "zouziwei",
   "license": "MIT",
   "keywords": [
     "vue3",

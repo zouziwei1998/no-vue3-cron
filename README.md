@@ -7,12 +7,12 @@
 [demo](https://nonone.cc/no-vue3-cron/)
 
 ## vue3-cron
-参考[vue3-cron](https://github.com/sugdove/vue3-cron)实现，加入了cron回显
+参考[vue3-cron](https://github.com/wuchuanpeng/no-vue3-cron)实现，去除了年和秒
 
 
 ## 项目地址
 
-- github : https://github.com/wuchuanpeng/no-vue3-cron
+- github : https://github.com/zouziwei1998/no-vue3-cron.git
 
 - github 项目启动: 1.npm install 2.npm run serve
 
@@ -153,13 +153,3 @@ export default defineComponent ({
   - 参数：无
 
   当点击 corn 表达式选择框取消按钮时触发
-
-## 联系方式
-
-邮箱 : i@nonone.cc
-
-欢迎大家关注我做的网站: http://www.nonone.cc/
-
-如果对您有帮助, 欢迎 star
-
-有任何问题请发 Issues 或者邮箱联系我-.- 谢谢!
