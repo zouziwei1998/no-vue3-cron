@@ -99,25 +99,6 @@
                         </el-radio>
                     </el-row>
                     <el-row>
-                        <el-radio v-model="state.minute.cronEvery" label="2"
-                        >{{ state.text.Minutes.interval[0] }}
-                            <el-input-number
-
-                                v-model="state.minute.incrementIncrement"
-                                :min="1"
-                                :max="60"
-                            ></el-input-number>
-                            {{ state.text.Minutes.interval[1] }}
-                            <el-input-number
-
-                                v-model="state.minute.incrementStart"
-                                :min="0"
-                                :max="59"
-                            ></el-input-number>
-                            {{ state.text.Minutes.interval[2] || "" }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
                         <el-radio class="long" v-model="state.minute.cronEvery" label="3"
                         >{{ state.text.Minutes.specific }}
                             <el-select
@@ -168,25 +149,6 @@
                         </el-radio>
                     </el-row>
                     <el-row>
-                        <el-radio v-model="state.hour.cronEvery" label="2"
-                        >{{ state.text.Hours.interval[0] }}
-                            <el-input-number
-
-                                v-model="state.hour.incrementIncrement"
-                                :min="0"
-                                :max="23"
-                            ></el-input-number>
-                            {{ state.text.Hours.interval[1] }}
-                            <el-input-number
-
-                                v-model="state.hour.incrementStart"
-                                :min="0"
-                                :max="23"
-                            ></el-input-number>
-                            {{ state.text.Hours.interval[2] }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
                         <el-radio class="long" v-model="state.hour.cronEvery" label="3"
                         >{{ state.text.Hours.specific }}
                             <el-select multiple v-model="state.hour.specificSpecific">
@@ -233,46 +195,6 @@
                         </el-radio>
                     </el-row>
                     <el-row>
-                        <el-radio v-model="state.day.cronEvery" label="2"
-                        >{{ state.text.Day.intervalWeek[0] }}
-                            <el-input-number
-
-                                v-model="state.week.incrementIncrement"
-                                :min="1"
-                                :max="7"
-                            ></el-input-number>
-                            {{ state.text.Day.intervalWeek[1] }}
-                            <el-select v-model="state.week.incrementStart">
-                                <el-option
-                                    v-for="(val, index) in 7"
-                                    :key="index"
-                                    :label="state.text.Week[val - 1]"
-                                    :value="val"
-                                ></el-option>
-                            </el-select>
-                            {{ state.text.Day.intervalWeek[2] }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
-                        <el-radio v-model="state.day.cronEvery" label="3"
-                        >{{ state.text.Day.intervalDay[0] }}
-                            <el-input-number
-
-                                v-model="state.day.incrementIncrement"
-                                :min="1"
-                                :max="31"
-                            ></el-input-number>
-                            {{ state.text.Day.intervalDay[1] }}
-                            <el-input-number
-
-                                v-model="state.day.incrementStart"
-                                :min="1"
-                                :max="31"
-                            ></el-input-number>
-                            {{ state.text.Day.intervalDay[2] }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
                         <el-radio class="long" v-model="state.day.cronEvery" label="4"
                         >{{ state.text.Day.specificWeek }}
                             <el-select multiple v-model="state.week.specificSpecific">
@@ -301,75 +223,6 @@
                             </el-select>
                         </el-radio>
                     </el-row>
-                    <el-row>
-                        <el-radio v-model="state.day.cronEvery" label="6">{{
-                            state.text.Day.lastDay
-                            }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
-                        <el-radio v-model="state.day.cronEvery" label="7">{{
-                            state.text.Day.lastWeekday
-                            }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
-                        <el-radio v-model="state.day.cronEvery" label="8"
-                        >{{ state.text.Day.lastWeek[0] }}
-                            <el-select v-model="state.week.cronLastSpecificDomDay">
-                                <el-option
-                                    v-for="(val, index) in 7"
-                                    :key="index"
-                                    :label="state.text.Week[val - 1]"
-                                    :value="val"
-                                ></el-option>
-                            </el-select>
-                            {{ state.text.Day.lastWeek[1] || "" }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
-                        <el-radio v-model="state.day.cronEvery" label="9">
-                            <el-input-number
-
-                                v-model="state.day.cronDaysBeforeEomMinus"
-                                :min="1"
-                                :max="31"
-                            ></el-input-number>
-                            {{ state.text.Day.beforeEndMonth[0] }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
-                        <el-radio v-model="state.day.cronEvery" label="10"
-                        >{{ state.text.Day.nearestWeekday[0] }}
-                            <el-input-number
-
-                                v-model="state.day.cronDaysNearestWeekday"
-                                :min="1"
-                                :max="31"
-                            ></el-input-number>
-                            {{ state.text.Day.nearestWeekday[1] }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
-                        <el-radio v-model="state.day.cronEvery" label="11"
-                        >{{ state.text.Day.someWeekday[0] }}
-                            <el-input-number
-
-                                v-model="state.week.cronNthDayNth"
-                                :min="1"
-                                :max="5"
-                            ></el-input-number>
-                            <el-select v-model="state.week.cronNthDayDay">
-                                <el-option
-                                    v-for="(val, index) in 7"
-                                    :key="index"
-                                    :label="state.text.Week[val - 1]"
-                                    :value="val"
-                                ></el-option>
-                            </el-select>
-                            {{ state.text.Day.someWeekday[1] }}
-                        </el-radio>
-                    </el-row>
                 </div>
             </el-tab-pane>
             <el-tab-pane>
@@ -381,24 +234,6 @@
                         <el-radio v-model="state.month.cronEvery" label="1">{{
                             state.text.Month.every
                             }}
-                        </el-radio>
-                    </el-row>
-                    <el-row>
-                        <el-radio v-model="state.month.cronEvery" label="2"
-                        >{{ state.text.Month.interval[0] }}
-                            <el-input-number
-
-                                v-model="state.month.incrementIncrement"
-                                :min="0"
-                                :max="12"
-                            ></el-input-number>
-                            {{ state.text.Month.interval[1] }}
-                            <el-input-number
-
-                                v-model="state.month.incrementStart"
-                                :min="0"
-                                :max="12"
-                            ></el-input-number>
                         </el-radio>
                     </el-row>
                     <el-row>
