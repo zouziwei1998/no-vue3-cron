@@ -301,14 +301,6 @@ export default defineComponent({
         const {i18n} = toRefs(props)
         const state = reactive({
             language: i18n.value,
-            second: {
-                cronEvery: "1",
-                incrementStart: 3,
-                incrementIncrement: 5,
-                rangeStart: 0,
-                rangeEnd: 0,
-                specificSpecific: [],
-            },
             minute: {
                 cronEvery: "1",
                 incrementStart: 3,
@@ -352,49 +344,14 @@ export default defineComponent({
                 rangeEnd: 0,
                 specificSpecific: [],
             },
-            year: {
-                cronEvery: "1",
-                incrementStart: 2017,
-                incrementIncrement: 1,
-                rangeStart: 0,
-                rangeEnd: 0,
-                specificSpecific: [],
-            },
             output: {
-                second: "",
                 minute: "",
                 hour: "",
                 day: "",
                 month: "",
                 Week: "",
-                year: "",
             },
             text: computed(() => Language[state.language || "cn"]),
-            secondsText: computed(() => {
-                let seconds = "";
-                let cronEvery = state.second.cronEvery;
-                switch (cronEvery.toString()) {
-                    case "1":
-                        seconds = "*";
-                        break;
-                    case "2":
-                        seconds =
-                            state.second.incrementStart +
-                            "/" +
-                            state.second.incrementIncrement;
-                        break;
-                    case "3":
-                        state.second.specificSpecific.map((val) => {
-                            seconds += val + ",";
-                        });
-                        seconds = seconds.slice(0, -1);
-                        break;
-                    case "4":
-                        seconds = state.second.rangeStart + "-" + state.second.rangeEnd;
-                        break;
-                }
-                return seconds;
-            }),
             minutesText: computed(() => {
                 let minutes = "";
                 let cronEvery = state.minute.cronEvery;
@@ -453,7 +410,7 @@ export default defineComponent({
                     case "4":
                     case "11":
                     case "8":
-                        days = "?";
+                        days = "*";
                         break;
                     case "3":
                         days =
@@ -487,7 +444,7 @@ export default defineComponent({
                     case "1":
                     case "3":
                     case "5":
-                        weeks = "?";
+                        weeks = "*";
                         break;
                     case "2":
                         weeks =
@@ -503,7 +460,7 @@ export default defineComponent({
                     case "7":
                     case "9":
                     case "10":
-                        weeks = "?";
+                        weeks = "*";
                         break;
                     case "8":
                       weeks = state.week.cronLastSpecificDomDay + "L";
@@ -537,59 +494,17 @@ export default defineComponent({
                 }
                 return months;
             }),
-            yearsText: computed(() => {
-                let years = "";
-                let cronEvery = state.year.cronEvery;
-                switch (cronEvery.toString()) {
-                    case "1":
-                        years = "*";
-                        break;
-                    case "2":
-                        years =
-                            state.year.incrementStart + "/" + state.year.incrementIncrement;
-                        break;
-                    case "3":
-                        state.year.specificSpecific.map((val) => {
-                            years += val + ",";
-                        });
-                        years = years.slice(0, -1);
-                        break;
-                    case "4":
-                        years = state.year.rangeStart + "-" + state.year.rangeEnd;
-                        break;
-                }
-                return years;
-            }),
             cron: computed(() => {
-                return `${state.secondsText || "*"} ${state.minutesText ||
-                "*"} ${state.hoursText || "*"} ${state.daysText ||
-                "*"} ${state.monthsText || "*"} ${state.weeksText ||
-                "?"} ${state.yearsText || "*"}`;
+                return `${state.minutesText || "*"} ${state.hoursText ||
+                "*"} ${state.daysText || "*"} ${state.monthsText ||
+                "*"} ${state.weeksText || "*"}`;
             }),
         });
         watch(() => props.cronValue, (newCron) => {
             if(typeof(newCron) !== 'string' || !newCron) return false
             let crons = newCron.split(" ");
-            // 解析seconds
-            let secondsText = crons[0].trim();
-            if (secondsText === "*") {
-                state.second.cronEvery = "1";
-            }else if (secondsText.includes("/")) {
-                state.second.cronEvery = "2";
-                let secondsTexts = secondsText.split("/");
-                state.second.incrementStart = parseInt(secondsTexts[0])
-                state.second.incrementIncrement = parseInt(secondsTexts[1])
-            }else if (secondsText.includes(",") || isFinite(secondsText)) {
-                state.second.cronEvery = "3";
-                state.second.specificSpecific = secondsText.split(",").map(item => parseInt(item));
-            }else if (secondsText.includes("-")) {
-                state.second.cronEvery = "4";
-                let secondsTexts = secondsText.split("-");
-                state.second.rangeStart = parseInt(secondsTexts[0])
-                state.second.rangeEnd = parseInt(secondsTexts[1])
-            }
             // 解析minutes
-            let minutesText = crons[1].trim();
+            let minutesText = crons[0].trim();
             if (minutesText === "*") {
                 state.minute.cronEvery = "1";
             }else if (minutesText.includes("/")) {
@@ -607,7 +522,7 @@ export default defineComponent({
                 state.minute.rangeEnd = parseInt(minutesTexts[1])
             }
             // 解析hours
-            let hoursText = crons[2].trim();
+            let hoursText = crons[1].trim();
             if (hoursText === "*") {
                 state.hour.cronEvery = "1";
             }else if (hoursText.includes("/")) {
@@ -625,8 +540,8 @@ export default defineComponent({
                 state.hour.rangeEnd = parseInt(hoursTexts[1])
             }
             // 解析days weeks
-            let daysText = crons[3].trim();
-            let weeksText = crons[5].trim();
+            let daysText = crons[2].trim();
+            let weeksText = crons[4].trim();
             if (daysText.includes("/")) {
                 state.day.cronEvery = "3";
                 let daysTexts = daysText.split("/");
@@ -645,7 +560,7 @@ export default defineComponent({
             }else if (daysText.endsWith("W")) {
                 state.day.cronEvery = "10";
                 state.day.cronDaysNearestWeekday = parseInt(daysText.replaceAll("W", ""))
-            }else if (daysText === "?") {
+            }else if (daysText === "*") {
                 if (weeksText.includes("/")) {
                     state.day.cronEvery = "2";
                     let weeksTexts = weeksText.split("/");
@@ -668,7 +583,7 @@ export default defineComponent({
             }
 
             // 解析months
-            let monthsText = crons[4].trim();
+            let monthsText = crons[3].trim();
             if (monthsText === "*") {
                 state.month.cronEvery = "1";
             }else if (monthsText.includes("/")) {
@@ -685,25 +600,6 @@ export default defineComponent({
                 state.month.rangeStart = parseInt(monthsTexts[0])
                 state.month.rangeEnd = parseInt(monthsTexts[1])
             }
-            // 解析years
-            let yearsText = crons[6].trim();
-            if (yearsText === "*") {
-                state.year.cronEvery = "1";
-            }else if (yearsText.includes("/")) {
-                state.year.cronEvery = "2";
-                let yearsTexts = yearsText.split("/");
-                state.year.incrementStart = parseInt(yearsTexts[0])
-                state.year.incrementIncrement = parseInt(yearsTexts[1])
-            }else if (yearsText.includes(",") || isFinite(yearsText)) {
-                state.year.cronEvery = "3";
-                state.year.specificSpecific = yearsText.split(",").map(item => parseInt(item));
-            }else if (yearsText.includes("-")) {
-                state.year.cronEvery = "4";
-                let yearsTexts = yearsText.split("-");
-                state.year.rangeStart = parseInt(yearsTexts[0])
-                state.year.rangeEnd = parseInt(yearsTexts[1])
-            }
-
         }, {
           immediate: true
         })
