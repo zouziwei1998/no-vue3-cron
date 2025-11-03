@@ -1,5 +1,10 @@
 <style lang="scss">
-.no-vue3-cron-div {
+/*
+  NOTE: The styles are copied from the original component and are based on a newer
+  version of Element Plus. They will likely need adjustments to work correctly
+  with element-plus@1.0.2-beta.47.
+*/
+.cron-compatible-div {
     .language {
         position: absolute;
         right: 25px;
@@ -30,13 +35,11 @@
 
     .myScroller {
         &::-webkit-scrollbar {
-            /*滚动条整体样式*/
-            width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
+            width: 5px;
             height: 1px;
         }
 
         &::-webkit-scrollbar-thumb {
-            /*滚动条里面小方块*/
             border-radius: 10px;
             background-color: skyblue;
             background-image: -webkit-linear-gradient(
@@ -52,7 +55,6 @@
         }
 
         &::-webkit-scrollbar-track {
-            /*滚动条里面轨道*/
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
             background: #ededed;
             border-radius: 10px;
@@ -79,7 +81,13 @@
 }
 </style>
 <template>
-    <div class="no-vue3-cron-div">
+    <!--
+      GEMINI-NOTE: This template has been recreated based on the original component.
+      Because it was designed for a much newer version of Element Plus, you will
+      likely need to debug and adjust the props, events, and slots of these
+      components to match the older version (1.0.2-beta.47) used in your project.
+    -->
+    <div class="cron-compatible-div">
         <el-button
           class="language"
           type="text"
@@ -102,17 +110,15 @@
                         <el-radio class="long" v-model="state.minute.cronEvery" label="3"
                         >{{ state.text.Minutes.specific }}
                             <el-select
-
                                 multiple
                                 v-model="state.minute.specificSpecific"
                             >
                                 <el-option
-                                    v-for="(val, index) in 60"
-                                    :key="index"
+                                    v-for="val in 60"
+                                    :key="val - 1"
                                     :value="val - 1"
-                                >{{ val - 1 }}
-                                </el-option
-                                >
+                                    :label="val - 1"
+                                />
                             </el-select>
                         </el-radio>
                     </el-row>
@@ -120,14 +126,12 @@
                         <el-radio v-model="state.minute.cronEvery" label="4"
                         >{{ state.text.Minutes.cycle[0] }}
                             <el-input-number
-
                                 v-model="state.minute.rangeStart"
                                 :min="1"
                                 :max="60"
                             ></el-input-number>
                             {{ state.text.Minutes.cycle[1] }}
                             <el-input-number
-
                                 v-model="state.minute.rangeEnd"
                                 :min="0"
                                 :max="59"
@@ -153,12 +157,11 @@
                         >{{ state.text.Hours.specific }}
                             <el-select multiple v-model="state.hour.specificSpecific">
                                 <el-option
-                                    v-for="(val, index) in 24"
-                                    :key="index"
+                                    v-for="val in 24"
+                                    :key="val - 1"
                                     :value="val - 1"
-                                >{{ val - 1 }}
-                                </el-option
-                                >
+                                    :label="val - 1"
+                                />
                             </el-select>
                         </el-radio>
                     </el-row>
@@ -166,14 +169,12 @@
                         <el-radio v-model="state.hour.cronEvery" label="4"
                         >{{ state.text.Hours.cycle[0] }}
                             <el-input-number
-
                                 v-model="state.hour.rangeStart"
                                 :min="0"
                                 :max="23"
                             ></el-input-number>
                             {{ state.text.Hours.cycle[1] }}
                             <el-input-number
-
                                 v-model="state.hour.rangeEnd"
                                 :min="0"
                                 :max="23"
@@ -202,10 +203,8 @@
                                     v-for="(val, index) in 7"
                                     :key="index"
                                     :label="state.text.Week[val - 1]"
-                                    :value="
-                    ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][val - 1]
-                  "
-                                ></el-option>
+                                    :value="['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][val - 1]"
+                                />
                             </el-select>
                         </el-radio>
                     </el-row>
@@ -214,12 +213,11 @@
                         >{{ state.text.Day.specificDay }}
                             <el-select multiple v-model="state.day.specificSpecific">
                                 <el-option
-                                    v-for="(val, index) in 31"
-                                    :key="index"
+                                    v-for="val in 31"
+                                    :key="val"
                                     :value="val"
-                                >{{ val }}
-                                </el-option
-                                >
+                                    :label="val"
+                                />
                             </el-select>
                         </el-radio>
                     </el-row>
@@ -241,11 +239,11 @@
                         >{{ state.text.Month.specific }}
                             <el-select multiple v-model="state.month.specificSpecific">
                                 <el-option
-                                    v-for="(val, index) in 12"
-                                    :key="index"
+                                    v-for="val in 12"
+                                    :key="val"
                                     :label="val"
                                     :value="val"
-                                ></el-option>
+                                />
                             </el-select>
                         </el-radio>
                     </el-row>
@@ -253,14 +251,12 @@
                         <el-radio v-model="state.month.cronEvery" label="4"
                         >{{ state.text.Month.cycle[0] }}
                             <el-input-number
-
                                 v-model="state.month.rangeStart"
                                 :min="1"
                                 :max="12"
                             ></el-input-number>
                             {{ state.text.Month.cycle[1] }}
                             <el-input-number
-
                                 v-model="state.month.rangeEnd"
                                 :min="1"
                                 :max="12"
@@ -272,9 +268,7 @@
         </el-tabs>
         <div class="bottom">
             <div class="value">
-        <span>
-          cron预览:
-        </span>
+                <span>cron预览:</span>
                 <el-tag type="primary">
                     {{ state.cron }}
                 </el-tag>
@@ -291,7 +285,7 @@ import Language from "./language";
 import {watch, reactive, computed, toRefs, defineComponent} from "vue";
 
 export default defineComponent({
-    name: "noVue3Cron",
+    name: "cron-compatible", // Changed component name
     props: {
         cronValue: String,
         i18n: {},
@@ -495,110 +489,124 @@ export default defineComponent({
                 return months;
             }),
             cron: computed(() => {
-                return `${state.minutesText || "*"} ${state.hoursText ||
-                "*"} ${state.daysText || "*"} ${state.monthsText ||
-                "*"} ${state.weeksText || "*"}`;
+                const minutes = state.minutesText || "*";
+                const hours = state.hoursText || "*";
+                const days = state.daysText || "*";
+                const months = state.monthsText || "*";
+                const weeks = state.weeksText || "*";
+                return `${minutes} ${hours} ${days} ${months} ${weeks}`;
             }),
         });
         watch(() => props.cronValue, (newCron) => {
             if(typeof(newCron) !== 'string' || !newCron) return false
-            let crons = newCron.split(" ");
-            // 解析minutes
-            let minutesText = crons[0].trim();
+            let crons = newCron.split(" ").filter(item => item);
+            if (crons.length < 5) return; // Not a valid cron string
+
+            // --- Minutes --- 
+            let minutesText = crons[0];
             if (minutesText === "*") {
                 state.minute.cronEvery = "1";
-            }else if (minutesText.includes("/")) {
+            } else if (minutesText.includes("/")) {
                 state.minute.cronEvery = "2";
-                let minutesTexts = minutesText.split("/");
-                state.minute.incrementStart = parseInt(minutesTexts[0])
-                state.minute.incrementIncrement = parseInt(minutesTexts[1])
-            }else if (minutesText.includes(",") || isFinite(minutesText)) {
+                let [start, increment] = minutesText.split("/");
+                state.minute.incrementStart = parseInt(start)
+                state.minute.incrementIncrement = parseInt(increment)
+            } else if (minutesText.includes("-")) {
+                state.minute.cronEvery = "4";
+                let [start, end] = minutesText.split("-");
+                state.minute.rangeStart = parseInt(start)
+                state.minute.rangeEnd = parseInt(end)
+            } else {
                 state.minute.cronEvery = "3";
                 state.minute.specificSpecific = minutesText.split(",").map(item => parseInt(item));
-            }else if (minutesText.includes("-")) {
-                state.minute.cronEvery = "4";
-                let minutesTexts = minutesText.split("-");
-                state.minute.rangeStart = parseInt(minutesTexts[0])
-                state.minute.rangeEnd = parseInt(minutesTexts[1])
             }
-            // 解析hours
-            let hoursText = crons[1].trim();
+
+            // --- Hours --- 
+            let hoursText = crons[1];
             if (hoursText === "*") {
                 state.hour.cronEvery = "1";
-            }else if (hoursText.includes("/")) {
+            } else if (hoursText.includes("/")) {
                 state.hour.cronEvery = "2";
-                let hoursTexts = hoursText.split("/");
-                state.hour.incrementStart = parseInt(hoursTexts[0])
-                state.hour.incrementIncrement = parseInt(hoursTexts[1])
-            }else if (hoursText.includes(",") || isFinite(hoursText)) {
+                let [start, increment] = hoursText.split("/");
+                state.hour.incrementStart = parseInt(start)
+                state.hour.incrementIncrement = parseInt(increment)
+            } else if (hoursText.includes("-")) {
+                state.hour.cronEvery = "4";
+                let [start, end] = hoursText.split("-");
+                state.hour.rangeStart = parseInt(start)
+                state.hour.rangeEnd = parseInt(end)
+            } else {
                 state.hour.cronEvery = "3";
                 state.hour.specificSpecific = hoursText.split(",").map(item => parseInt(item));
-            }else if (hoursText.includes("-")) {
-                state.hour.cronEvery = "4";
-                let hoursTexts = hoursText.split("-");
-                state.hour.rangeStart = parseInt(hoursTexts[0])
-                state.hour.rangeEnd = parseInt(hoursTexts[1])
             }
-            // 解析days weeks
-            let daysText = crons[2].trim();
-            let weeksText = crons[4].trim();
-            if (daysText.includes("/")) {
-                state.day.cronEvery = "3";
-                let daysTexts = daysText.split("/");
-                state.day.incrementStart = parseInt(daysTexts[0])
-                state.day.incrementIncrement = parseInt(daysTexts[1])
-            }else if (daysText.includes(",") || isFinite(daysText)) {
-                state.day.cronEvery = "5";
-                state.day.specificSpecific = daysText.split(",").map(item => parseInt(item));
-            }else if (daysText === "L") {
-                state.day.cronEvery = "6";
-            }else if (daysText === "LW") {
-                state.day.cronEvery = "7";
-            }else if (daysText.startsWith("L-")) {
-                state.day.cronEvery = "9";
-                state.day.cronDaysBeforeEomMinus = parseInt(daysText.replaceAll("L-", ""))
-            }else if (daysText.endsWith("W")) {
-                state.day.cronEvery = "10";
-                state.day.cronDaysNearestWeekday = parseInt(daysText.replaceAll("W", ""))
-            }else if (daysText === "*") {
+
+            // --- Day of Month and Day of Week --- 
+            let daysText = crons[2];
+            let weeksText = crons[4];
+
+            if (daysText !== '?') {
+                if (daysText.includes("/")) {
+                    state.day.cronEvery = "3";
+                    let [start, increment] = daysText.split("/");
+                    state.day.incrementStart = parseInt(start)
+                    state.day.incrementIncrement = parseInt(increment)
+                } else if (daysText === "L") {
+                    state.day.cronEvery = "6";
+                } else if (daysText === "LW") {
+                    state.day.cronEvery = "7";
+                } else if (daysText.startsWith("L-")) {
+                    state.day.cronEvery = "9";
+                    state.day.cronDaysBeforeEomMinus = parseInt(daysText.replace("L-", ""))
+                } else if (daysText.endsWith("W")) {
+                    state.day.cronEvery = "10";
+                    state.day.cronDaysNearestWeekday = parseInt(daysText.replace("W", ""))
+                } else if (daysText !== '*' && daysText !== '?') {
+                    state.day.cronEvery = "5";
+                    state.day.specificSpecific = daysText.split(",").map(item => parseInt(item));
+                }
+            } 
+            
+            if (weeksText !== '?') {
                 if (weeksText.includes("/")) {
                     state.day.cronEvery = "2";
-                    let weeksTexts = weeksText.split("/");
-                    state.week.incrementStart = parseInt(weeksTexts[0])
-                    state.week.incrementIncrement = parseInt(weeksTexts[1])
-                }else if (weeksText.includes(",") || isFinite(weeksText)) {
-                    state.day.cronEvery = "4";
-                    state.week.specificSpecific = weeksText.split(",").map(item => item);
-                }else if (weeksText.includes("#")) {
+                    let [start, increment] = weeksText.split("/");
+                    state.week.incrementStart = parseInt(start)
+                    state.week.incrementIncrement = parseInt(increment)
+                } else if (weeksText.includes("#")) {
                     state.day.cronEvery = "11";
-                    let weeksTexts = weeksText.split("#");
-                    state.week.cronNthDayDay = parseInt(weeksTexts[0])
-                    state.week.cronNthDayNth = parseInt(weeksTexts[1])
-                }else if (weeksText.endsWith("L")) {
+                    let [day, nth] = weeksText.split("#");
+                    state.week.cronNthDayDay = parseInt(day)
+                    state.week.cronNthDayNth = parseInt(nth)
+                } else if (weeksText.endsWith("L")) {
                   state.day.cronEvery = "8";
-                  state.week.cronLastSpecificDomDay = parseInt(weeksText.replaceAll("L", ""))
+                  state.week.cronLastSpecificDomDay = parseInt(weeksText.replace("L", ""))
+                } else if (weeksText !== '*') {
+                    state.day.cronEvery = "4";
+                    state.week.specificSpecific = weeksText.split(",");
                 }
-            }else {
+            }
+
+            if (daysText === '*' && weeksText === '?') {
                 state.day.cronEvery = "1";
             }
 
-            // 解析months
-            let monthsText = crons[3].trim();
+            // --- Months --- 
+            let monthsText = crons[3];
             if (monthsText === "*") {
                 state.month.cronEvery = "1";
-            }else if (monthsText.includes("/")) {
+            } else if (monthsText.includes("/")) {
                 state.month.cronEvery = "2";
-                let monthsTexts = monthsText.split("/");
-                state.month.incrementStart = parseInt(monthsTexts[0])
-                state.month.incrementIncrement = parseInt(monthsTexts[1])
-            }else if (monthsText.includes(",") || isFinite(monthsText)) {
+                let [start, increment] = monthsText.split("/");
+                state.month.incrementStart = parseInt(start)
+                state.month.incrementIncrement = parseInt(increment)
+            } else if (monthsText.includes("-")) {
+                state.month.cronEvery = "4";
+                let [start, end] = monthsText.split("-");
+                state.month.rangeStart = parseInt(start)
+                state.month.rangeEnd = parseInt(end)
+            } else {
                 state.month.cronEvery = "3";
                 state.month.specificSpecific = monthsText.split(",").map(item => parseInt(item));
-            }else if (monthsText.includes("-")) {
-                state.month.cronEvery = "4";
-                let monthsTexts = monthsText.split("-");
-                state.month.rangeStart = parseInt(monthsTexts[0])
-                state.month.rangeEnd = parseInt(monthsTexts[1])
             }
         }, {
           immediate: true
@@ -613,28 +621,11 @@ export default defineComponent({
             emit('change', state.cron)
             close()
         }
-        const rest = (data) => {
-            for (let i in data) {
-                if (data[i] instanceof Object) {
-                    this.rest(data[i]);
-                } else {
-                    switch (typeof data[i]) {
-                        case "object":
-                            data[i] = [];
-                            break;
-                        case "string":
-                            data[i] = "";
-                            break;
-                    }
-                }
-            }
-        }
         return {
             state,
             getValue,
             close,
             handleChange,
-            rest
         }
     },
 });

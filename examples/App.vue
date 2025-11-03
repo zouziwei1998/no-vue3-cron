@@ -1,55 +1,57 @@
 <template>
-  <div class="cron">
-    <h1>no-vue3-cron</h1>
-    <el-input v-model="state.cron" placeholder="cron表达式...">
-      <template #append>
-        <el-popover :visible="state.cronPopover" width="700px" trigger="click">
-            <noVue3Cron
-                :cron-value="state.cron"
-                @change="changeCron"
-                @close="state.cronPopover=false"
-                max-height="400px"
-                i18n="cn"
-            ></noVue3Cron>
-            <template #reference>
-                <el-button @click="state.cronPopover = !state.cronPopover">设置</el-button>
-            </template>
-        </el-popover>
-      </template>
-    </el-input>
+  <div id="app-container">
+    <h1>Cron Compatible Component Debugger</h1>
+    <p>Current Cron Value: <strong>{{ cronValue }}</strong></p>
+    <hr />
+    <div class="component-wrapper">
+      <cron-compatible
+        :cronValue="cronValue"
+        @change="handleCronChange"
+        i18n="cn"
+        maxHeight="300px"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { reactive,defineComponent } from 'vue'
-export default defineComponent ({
-  name: "App",
-  setup(){
-      const state = reactive({
-          cronPopover: false,
-          cron: ''
-      })
-      const changeCron = (val) => {
-          if(typeof(val) !== 'string') return false
-          state.cron = val
-      }
+import { defineComponent, ref } from 'vue';
+import CronCompatible from '../index.vue';
 
-      return {
-          state,
-          changeCron,
-      }
-  }
+export default defineComponent({
+  name: 'App',
+  components: {
+    CronCompatible,
+  },
+  setup() {
+    const cronValue = ref('0 0 0 * * ?');
+
+    const handleCronChange = (newValue) => {
+      cronValue.value = newValue;
+      console.log('New cron value from component:', newValue);
+    };
+
+    return {
+      cronValue,
+      handleCronChange,
+    };
+  },
 });
 </script>
 
-<style lang="scss" scoped>
-.cron {
-  width: 700px;
-  margin: 0 auto;
-  margin-top: 100px;
-  h1 {
-    font-size: 50px;
-    text-align: center;
-  }
+<style>
+#app-container {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  padding: 20px;
+}
+.component-wrapper {
+    width: 600px;
+    margin: 30px auto;
+    border: 1px solid #eee;
+    padding: 20px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 }
 </style>

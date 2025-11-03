@@ -1,57 +1,28 @@
 {
-  "name": "@ci/no-vue3-cron",
+  "name": "@ci/cron-compatible",
   "version": "1.0.0",
   "private": false,
-  "description": "Corn expression plugin based on vue3+elementplus（基于vue3+elementplus的corn表达式插件）",
+  "description": "Cron expression plugin compatible with older vue3 and element-plus versions.",
   "author": "zouziwei",
   "license": "MIT",
-  "keywords": [
-    "vue3",
-    "vue",
-    "cron",
-    "html"
+  "main": "lib/cron-compatible.umd.js",
+  "files": [
+    "lib"
   ],
-  "main": "lib/noVue3Cron.umd.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name noVue3Cron --dest lib packages/index.js"
+    "serve": "vue-cli-service serve examples/main.js",
+    "build-lib": "vue-cli-service build --target lib --name cron-compatible --dest lib index.js"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "element-plus": "^2.7.2",
-    "vue": "^3.2.37"
+    "element-plus": "^1.0.2-beta.47"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0",
-    "sass": "^1.19.0",
-    "sass-loader": "^8.0.0",
-    "vue-cli-plugin-element-plus": "^0.0.13"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "@vue/compiler-sfc": "3.0.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2"
+  }
 }
